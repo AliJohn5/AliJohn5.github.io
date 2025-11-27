@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:login_template/auth/components/custom_input.dart';
-import 'package:login_template/auth/screens/forget_password_screen.dart';
-import 'package:login_template/auth/screens/signup_screen.dart';
 import 'package:login_template/auth/services/loading_service.dart';
 import 'package:login_template/auth/services/login_service.dart';
 import 'package:login_template/auth/services/show_message_service.dart';
-import 'package:login_template/home/home_screen.dart';
 import 'package:login_template/l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -156,12 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ForgetPasswordScreen(),
-                      ),
-                    );
+                    context.go('/forget-password');
                   },
                 ),
               ),
@@ -174,10 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     if (!_formKey.currentState!.validate()) {
                       if (!context.mounted) return;
-                      showMessage(
-                        context,
-                        tr.fillData,
-                      );
+                      showMessage(context, tr.fillData);
                       return;
                     }
 
@@ -198,12 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (!context.mounted) return;
                         showMessage(context, tr.welcomeAgain);
 
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
-                          ),
-                        );
+                        context.go('/');
                       } else {
                         if (!context.mounted) return;
                         showMessage(context, res['message']);
@@ -266,20 +251,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignUpScreen(),
-                          ),
-                        );
+                       context.go('/signup');
+
                       },
                     ),
                   ],
                 ),
               ),
 
-              const SizedBox(height: 30)
-
+              const SizedBox(height: 30),
             ],
           ),
         ),

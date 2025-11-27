@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:login_template/auth/components/custom_input.dart';
-import 'package:login_template/auth/screens/forget_password_screen.dart';
-import 'package:login_template/auth/screens/login_screen.dart';
 import 'package:login_template/auth/services/loading_service.dart';
 import 'package:login_template/auth/services/login_service.dart';
 import 'package:login_template/auth/services/show_message_service.dart';
@@ -38,7 +37,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Directionality(
-                  textDirection: Directionality.of(context),
+                textDirection: Directionality.of(context),
 
                 child: SizedBox(
                   height: 300, // give the stack a size
@@ -53,11 +52,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           matchTextDirection: true,
                         ),
                       ),
-                
+
                       // Text
                       Positioned(
                         bottom: 5,
-                         left: Directionality.of(context) == TextDirection.ltr
+                        left: Directionality.of(context) == TextDirection.ltr
                             ? 30
                             : null,
                         right: Directionality.of(context) == TextDirection.ltr
@@ -75,7 +74,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
-                
+
                             Container(
                               width: 120,
                               height: 5,
@@ -162,10 +161,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   onPressed: () async {
                     if (!_formKey.currentState!.validate()) {
                       if (!context.mounted) return;
-                      showMessage(
-                        context,
-                        tr.fillData,
-                      );
+                      showMessage(context, tr.fillData);
                       return;
                     }
 
@@ -185,17 +181,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
                       if (res['status'] == "success") {
                         if (!context.mounted) return;
-                        showMessage(
-                          context,
-                          res['message']
-                        );
+                        showMessage(context, res['message']);
 
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
+                        context.go("/login");
                       } else {
                         if (!context.mounted) return;
                         showMessage(context, res['message']);
@@ -258,18 +246,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ForgetPasswordScreen(),
-                          ),
-                        );
+                        context.go("/forget-password");
                       },
                     ),
                   ],
                 ),
               ),
-
 
               Align(
                 alignment: Alignment.center,
@@ -306,20 +288,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
+                        context.go("/login");
                       },
                     ),
                   ],
                 ),
               ),
 
-
-              const SizedBox(height: 30,)
+              const SizedBox(height: 30),
             ],
           ),
         ),

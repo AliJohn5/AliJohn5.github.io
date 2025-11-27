@@ -3,10 +3,17 @@ import 'dart:ui' as ui;
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
+import 'package:login_template/auth/screens/change_password_screen.dart';
+import 'package:login_template/auth/screens/forget_password_screen.dart';
+import 'package:login_template/auth/screens/login_screen.dart';
 import 'package:login_template/auth/screens/refresh_screen.dart';
+import 'package:login_template/auth/screens/signup_screen.dart';
 import 'package:login_template/auth/welcome_screen.dart';
 import 'package:login_template/auth/services/login_service.dart';
+import 'package:login_template/home/home_screen.dart';
 import 'package:login_template/l10n/app_localizations.dart';
+import 'package:login_template/settings/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String?> setInitialLocale() async {
@@ -74,10 +81,64 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   Locale? _locale;
 
+  late final GoRouter _router;
+
   @override
   void initState() {
     super.initState();
     _locale = Locale(widget.localelang);
+    _locale = Locale(widget.localelang);
+
+    _router = GoRouter(
+      initialLocation: widget.isLogedIn ? "/refresh" : "/welcome",
+      routes: [
+        GoRoute(
+          path: "/welcome",
+          builder: (context, state) => const WelcomeScreen(),
+        ),
+        GoRoute(
+          path: "/refresh",
+          builder: (context, state) => const RefreshScreen(),
+        ),
+        GoRoute(
+          path: '/login',
+          builder: (context, state) => const LoginScreen(),
+        ),
+        GoRoute(
+          path: '/signup',
+          builder: (context, state) => const SignUpScreen(),
+        ),
+
+        GoRoute(
+          path: '/forget-password',
+          builder: (context, state) => const ForgetPasswordScreen(),
+        ),
+
+        GoRoute(
+          path: '/change-password',
+          builder: (context, state) {
+            final email = state.uri.queryParameters['email'] ?? '';
+            return ChangePasswordScreen(email: email);
+          },
+        ),
+
+        GoRoute(
+          path: '/refresh',
+          builder: (context, state) => const RefreshScreen(),
+        ),
+
+        GoRoute(
+          path: '/',
+          builder: (context, state) => const HomeScreen(),
+          routes: [
+            GoRoute(
+              path: 'settings',
+              builder: (context, state) => const SettingsScreen(),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   void setLocale(Locale locale) {
@@ -174,15 +235,13 @@ class MyAppState extends State<MyApp> {
       initial: widget.savedThemeMode ?? AdaptiveThemeMode.system,
 
       builder: (theme, darkTheme) {
-        return MaterialApp(
+        return MaterialApp.router(
           title: 'Flutter Demo',
 
           locale: _locale,
-
           supportedLocales: const [Locale('en'), Locale('ar')],
-
           localizationsDelegates: const [
-            AppLocalizations.delegate, // ✔ Our translations
+            AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
@@ -201,9 +260,7 @@ class MyAppState extends State<MyApp> {
           theme: theme,
           darkTheme: darkTheme,
 
-          home: widget.isLogedIn
-              ? const RefreshScreen()
-              : const WelcomeScreen(),
+          routerConfig: _router,
         );
       },
     );

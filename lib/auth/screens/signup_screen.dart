@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:login_template/auth/components/custom_input.dart';
-import 'package:login_template/auth/screens/login_screen.dart';
 import 'package:login_template/auth/services/loading_service.dart';
 import 'package:login_template/auth/services/login_service.dart';
 import 'package:login_template/auth/services/show_message_service.dart';
@@ -193,12 +193,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           res['message'],
                         );
 
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
+                        context.go('/login');
+
                       } else {
                         if (!context.mounted) return;
                         showMessage(context, res['message']);
@@ -261,12 +257,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
+                        context.go('/login');
+
                       },
                     ),
                   ],

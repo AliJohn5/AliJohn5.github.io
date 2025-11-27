@@ -1,6 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:login_template/auth/screens/login_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:login_template/auth/services/loading_service.dart';
 import 'package:login_template/auth/services/logout_service.dart';
 import 'package:login_template/l10n/app_localizations.dart';
@@ -147,11 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   hideLoadingDialog(context);
 
                   if (!context.mounted) return;
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (_) => LoginScreen()),
-                    (route) => false,
-                  );
+                  context.go("/login");
                 },
                 child: Text(
                   "Log out",

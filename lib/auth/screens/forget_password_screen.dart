@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:login_template/auth/components/custom_input.dart';
-import 'package:login_template/auth/screens/change_password_screen.dart';
-import 'package:login_template/auth/screens/login_screen.dart';
 import 'package:login_template/auth/services/loading_service.dart';
 import 'package:login_template/auth/services/login_service.dart';
 import 'package:login_template/auth/services/show_message_service.dart';
@@ -159,14 +158,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         if (!context.mounted) return;
                         showMessage(context, res['message']);
 
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChangePasswordScreen(
-                              email: emailController.text.trim(),
-                            ),
-                          ),
-                        );
+                        context.go('/change-password?email=${emailController.text.trim()}');
+
                       } else {
                         if (!context.mounted) return;
                         showMessage(context, res['message']);
@@ -229,12 +222,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
+                        context.go('/login');
+
                       },
                     ),
                   ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login_template/auth/screens/login_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:login_template/l10n/app_localizations.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -67,12 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: GestureDetector(
                 onTap: () {
                   // Navigate to Login Screen
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                  );
+                  context.go('/login');
                 },
 
                 child: Align(

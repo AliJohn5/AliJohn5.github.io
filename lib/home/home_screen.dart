@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:login_template/home/screens/cart_selected_screen.dart';
 import 'package:login_template/home/screens/chat_selected_screen.dart';
 import 'package:login_template/home/screens/home_selected_screen.dart';
@@ -6,7 +7,6 @@ import 'package:login_template/home/screens/notification_selected_screen.dart';
 import 'package:login_template/home/screens/profile_selected_screen.dart';
 import 'package:login_template/home/screens/search_selected_screen.dart';
 import 'package:login_template/l10n/app_localizations.dart';
-import 'package:login_template/settings/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -72,10 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
-              );
+              context.go("/settings");
             },
             icon: Icon(Icons.settings, color: unSelectedIconColor),
           ),

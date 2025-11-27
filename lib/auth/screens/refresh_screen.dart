@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:login_template/auth/screens/login_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:login_template/auth/services/loading_service.dart';
 import 'package:login_template/auth/services/login_service.dart';
 import 'package:login_template/auth/services/logout_service.dart';
 import 'package:login_template/auth/services/show_message_service.dart';
-import 'package:login_template/home/home_screen.dart';
 import 'package:login_template/l10n/app_localizations.dart';
 
 class RefreshScreen extends StatefulWidget {
@@ -35,19 +34,15 @@ class _RefreshScreenState extends State<RefreshScreen> {
       if (!mounted) return;
 
       if (res['status'] == "success") {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
-        );
+        context.go('/');
+
       } else {
         showMessage(context, res['message']);
         await logoutUser();
         if (!mounted) return;
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => LoginScreen()),
-        );
+        context.go('/login');
+
       }
     } catch (e) {
       if (!mounted) return;
